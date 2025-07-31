@@ -20,8 +20,11 @@ func main() {
 
 		// If no user record exists for the email, create one
 		if e.Record == nil {
-			// Extract email from the request
-			email, _ := e.Data["email"].(string)
+			// Extract email from the request context
+			email := e.RequestEvent.Request.PostFormValue("email")
+			if email == "" {
+				email = e.RequestEvent.Request.FormValue("email")
+			}
 			if email == "" {
 				return e.Next() // Let the original handler deal with validation
 			}
