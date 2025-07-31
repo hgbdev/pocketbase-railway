@@ -16,7 +16,7 @@ COPY go.mod ./
 COPY main.go .
 
 # Generate go.sum and download dependencies
-RUN go mod tidy
+RUN go mod tidy && go mod download
 
 # Build the application
 RUN CGO_ENABLED=0 GOOS=linux go build -o pocketbase-custom .
