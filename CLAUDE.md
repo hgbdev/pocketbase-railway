@@ -12,6 +12,7 @@ This is a PocketBase deployment template for Railway with custom Go hooks. Pocke
 - **Multi-stage Docker build**: Compiles Go application and runs in Alpine Linux container
 - **Railway deployment**: Configured for easy deployment on Railway platform
 - **Port configuration**: Exposes port 8080 for HTTP traffic
+- **Data persistence**: Uses volume mount at `/pb/pb_data` for database and file storage
 - **OTP Authentication**: Includes custom hook for automatic user creation during OTP requests
 
 ## Key Files

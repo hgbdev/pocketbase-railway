@@ -28,7 +28,13 @@ RUN apk add --no-cache ca-certificates
 # Copy the built binary
 COPY --from=builder /app/pocketbase-custom /usr/local/bin/pocketbase-custom
 
+# Create data directory
+RUN mkdir -p /pb/pb_data
+
+# Set volume for data persistence
+VOLUME ["/pb/pb_data"]
+
 EXPOSE 8080
 
-# start custom PocketBase
-CMD ["/usr/local/bin/pocketbase-custom", "serve", "--http=0.0.0.0:8080"]
+# start custom PocketBase with data directory
+CMD ["/usr/local/bin/pocketbase-custom", "serve", "--http=0.0.0.0:8080", "--dir=/pb/pb_data"]
