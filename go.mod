@@ -1,6 +1,6 @@
 module pocketbase-railway
 
-go 1.21
+go 1.22
 
 require github.com/pocketbase/pocketbase v0.23.11
 

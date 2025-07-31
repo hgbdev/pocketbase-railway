@@ -1,5 +1,5 @@
 # Build stage
-FROM golang:1.21-alpine AS builder
+FROM golang:1.22-alpine AS builder
 
 ARG PB_VERSION=0.23.11
 ARG PB_TOKEN_SECRET
