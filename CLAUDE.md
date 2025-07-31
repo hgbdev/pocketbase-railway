@@ -12,7 +12,7 @@ This is a PocketBase deployment template for Railway with custom Go hooks. Pocke
 - **Multi-stage Docker build**: Compiles Go application and runs in Alpine Linux container
 - **Railway deployment**: Configured for easy deployment on Railway platform
 - **Port configuration**: Exposes port 8080 for HTTP traffic
-- **Data persistence**: Uses volume mount at `/pb/pb_data` for database and file storage
+- **Data persistence**: Configured to use `/pb/pb_data` directory (requires Railway volume mount)
 - **OTP Authentication**: Includes custom hook for automatic user creation during OTP requests
 
 ## Key Files
@@ -48,4 +48,15 @@ This is a PocketBase deployment template for Railway with custom Go hooks. Pocke
 
 ## Deployment
 
-The project is designed for Railway deployment using the template button in the README. No additional configuration files or build steps are required.
+The project is designed for Railway deployment using the template button in the README. 
+
+### Railway Volume Setup
+
+For data persistence, mount a Railway volume to `/pb/pb_data`:
+
+1. In Railway dashboard, go to your service
+2. Navigate to the "Variables" tab
+3. Add a volume mount: `/pb/pb_data`
+4. Redeploy the service
+
+This ensures your PocketBase database and uploaded files persist between deployments.

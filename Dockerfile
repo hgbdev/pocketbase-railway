@@ -31,9 +31,6 @@ COPY --from=builder /app/pocketbase-custom /usr/local/bin/pocketbase-custom
 # Create data directory
 RUN mkdir -p /pb/pb_data
 
-# Set volume for data persistence
-VOLUME ["/pb/pb_data"]
-
 EXPOSE 8080
 
 # start custom PocketBase with data directory
