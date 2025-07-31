@@ -11,10 +11,12 @@ RUN apk add --no-cache git ca-certificates
 
 # Copy Go module files
 COPY go.mod ./
-RUN go mod download
 
 # Copy source code
 COPY main.go .
+
+# Generate go.sum and download dependencies
+RUN go mod tidy
 
 # Build the application
 RUN CGO_ENABLED=0 GOOS=linux go build -o pocketbase-custom .
