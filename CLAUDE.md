@@ -42,8 +42,7 @@ This is a PocketBase deployment template for Railway with custom Go hooks. Pocke
 
 ## Configuration
 
-- PocketBase version is controlled via the `PB_VERSION` ARG in the Dockerfile (currently 0.23.11)
-- Token secret is configured via the `PB_TOKEN_SECRET` environment variable for JWT signing
+- PocketBase version is controlled via the `PB_VERSION` ARG in the Dockerfile (currently 0.29.0)
 - To update PocketBase version, modify the `PB_VERSION` value in the Dockerfile
 
 ## Deployment

@@ -11,19 +11,14 @@ import (
 func main() {
 	app := pocketbase.New()
 
-	// Register hook for record auth with OTP (before request processing)
-	app.OnRecordAuthWithOTPRequest().BindFunc(func(e *core.RecordAuthWithOTPRequestEvent) error {
-		// Check if this is for the users collection
-		if e.Collection.Name != "users" {
-			return e.Next()
-		}
-
+	// Register hook for OTP request - fires only for "users" collection
+	app.OnRecordRequestOTPRequest("users").BindFunc(func(e *core.RecordCreateOTPRequestEvent) error {
 		// If no user record exists for the email, create one
 		if e.Record == nil {
-			// Extract email from the request context
-			email := e.RequestEvent.Request.PostFormValue("email")
+			// Extract email from the request
+			email := e.Request.PostFormValue("email")
 			if email == "" {
-				email = e.RequestEvent.Request.FormValue("email")
+				email = e.Request.FormValue("email")
 			}
 			if email == "" {
 				return e.Next() // Let the original handler deal with validation
@@ -38,7 +33,7 @@ func main() {
 			record.SetPassword(randomPassword)
 
 			// Save the new user
-			if err := app.Save(record); err != nil {
+			if err := e.App.Save(record); err != nil {
 				return err
 			}
 

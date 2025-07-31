@@ -2,7 +2,6 @@
 FROM golang:1.23-alpine AS builder
 
 ARG PB_VERSION=0.29.0
-ARG PB_TOKEN_SECRET
 
 WORKDIR /app
 
@@ -23,9 +22,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o pocketbase-custom .
 
 # Runtime stage
 FROM alpine:latest
-
-ARG PB_TOKEN_SECRET
-ENV PB_TOKEN_SECRET=${PB_TOKEN_SECRET}
 
 RUN apk add --no-cache ca-certificates
 
