@@ -1,13 +1,11 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
-	"github.com/pocketbase/pocketbase/models"
 	"github.com/pocketbase/pocketbase/tools/security"
 )
 
@@ -36,7 +34,7 @@ func main() {
 				return err
 			}
 
-			record := models.NewRecord(collection)
+			record := collection.NewRecord()
 			record.SetEmail(email)
 			
 			// Generate a random password (user will use OTP to login)

@@ -1,7 +1,7 @@
 # Build stage
 FROM golang:1.23-alpine AS builder
 
-ARG PB_VERSION=0.23.11
+ARG PB_VERSION=0.29.0
 ARG PB_TOKEN_SECRET
 
 WORKDIR /app
