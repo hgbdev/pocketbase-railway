@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
@@ -12,23 +11,23 @@ import (
 func main() {
 	app := pocketbase.New()
 
-	// Register the OTP request hook for the users collection
-	app.OnRecordAuthRequestOTPRequest("users").BindFunc(func(e *core.RecordAuthRequestOTPRequestEvent) error {
-		// If no user record exists, create one
+	// Register hook for record auth with OTP (before request processing)
+	app.OnRecordAuthWithOTPRequest().BindFunc(func(e *core.RecordAuthWithOTPRequestEvent) error {
+		// Check if this is for the users collection
+		if e.Collection.Name != "users" {
+			return e.Next()
+		}
+
+		// If no user record exists for the email, create one
 		if e.Record == nil {
-			// Extract email from request body
-			email := e.HttpContext.FormValue("email")
+			// Extract email from the request
+			email, _ := e.Data["email"].(string)
 			if email == "" {
-				return core.NewBadRequestError("Email is required", nil)
+				return e.Next() // Let the original handler deal with validation
 			}
 
 			// Create new user record
-			collection, err := app.FindCollectionByNameOrId("users")
-			if err != nil {
-				return err
-			}
-
-			record := core.NewRecord(collection)
+			record := core.NewRecord(e.Collection)
 			record.SetEmail(email)
 			
 			// Generate a random password (user will use OTP to login)
